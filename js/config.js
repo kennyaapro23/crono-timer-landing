@@ -17,7 +17,7 @@ window.SITE_CONFIG = {
   // Repositorio oficial de CronoTimer
   github: {
     owner: 'kennyaapro23',
-    repo: 'crono-timer-landin',
+    repo: 'crono-timer-landing',
     releaseTag: 'V2.1.0'
   },
 
