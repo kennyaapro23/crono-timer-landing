@@ -1,3 +1,4 @@
+
 /* ============================================================================
    CronoTimer — interacciones de la landing
    ========================================================================== */
@@ -98,7 +99,10 @@
   if ('IntersectionObserver' in window) {
     const co = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
-        if (entry.isIntersecting) { animateCounter(entry.target); co.unobserve(entry.target) }
+        if (entry.isIntersecting) {
+          animateCounter(entry.target)
+          co.unobserve(entry.target)
+        }
       })
     }, { threshold: 0.4 })
     counters.forEach(el => co.observe(el))
@@ -125,7 +129,8 @@
       panel.classList.toggle('is-active', active)
     })
     const idx = galleryTabs.findIndex(t => t.dataset.shot === key)
-    if (galleryCounter) galleryCounter.textContent = `${String(idx + 1).padStart(2, '0')} / ${String(galleryTabs.length).padStart(2, '0')}`
+    if (galleryCounter) galleryCounter.textContent =
+      `${String(idx + 1).padStart(2, '0')} / ${String(galleryTabs.length).padStart(2, '0')}`
   }
 
   galleryTabs.forEach((tab, i) => {
@@ -133,7 +138,9 @@
     tab.addEventListener('keydown', e => {
       if (e.key !== 'ArrowRight' && e.key !== 'ArrowLeft') return
       e.preventDefault()
-      const next = e.key === 'ArrowRight' ? (i + 1) % galleryTabs.length : (i - 1 + galleryTabs.length) % galleryTabs.length
+      const next = e.key === 'ArrowRight'
+        ? (i + 1) % galleryTabs.length
+        : (i - 1 + galleryTabs.length) % galleryTabs.length
       galleryTabs[next].focus()
       showShot(galleryTabs[next].dataset.shot)
     })
@@ -172,7 +179,9 @@
   })
   if (lightbox) {
     $('.lightbox-close', lightbox)?.addEventListener('click', closeLightbox)
-    lightbox.addEventListener('click', e => { if (e.target === lightbox) closeLightbox() })
+    lightbox.addEventListener('click', e => {
+      if (e.target === lightbox) closeLightbox()
+    })
   }
   document.addEventListener('keydown', e => {
     if (e.key === 'Escape') closeLightbox()
@@ -193,7 +202,10 @@
       }
       if (videoFallback) videoFallback.hidden = true
     } else {
-      if (videoFrame) { videoFrame.hidden = true; videoFrame.innerHTML = '' }
+      if (videoFrame) {
+        videoFrame.hidden = true
+        videoFrame.innerHTML = ''
+      }
       if (videoFallback) videoFallback.hidden = false
     }
     videoModal.hidden = false
@@ -211,9 +223,13 @@
   if (videoModal) {
     $('.video-close', videoModal)?.addEventListener('click', closeVideo)
     $('.video-close-inner', videoModal)?.addEventListener('click', closeVideo)
-    videoModal.addEventListener('click', e => { if (e.target === videoModal) closeVideo() })
+    videoModal.addEventListener('click', e => {
+      if (e.target === videoModal) closeVideo()
+    })
   }
-  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeVideo() })
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') closeVideo()
+  })
 
   /* ── Planes y calculadora ──────────────────────────────────────────────── */
   const planButtons = $$('.plan-toggle')
@@ -236,16 +252,26 @@
   fillPrice('[data-price-annual]', cfg.pricing?.annualPerPc)
   fillPrice('[data-price-perpetual]', cfg.pricing?.perpetualPerPc)
 
-  const planLabel = () => state.plan === 'perpetual' ? 'Licencia permanente' : 'Licencia anual'
+  const planLabel = () =>
+    state.plan === 'perpetual' ? 'Licencia permanente' : 'Licencia anual'
+
   const tierFactor = (pcs) => {
-    const tiers = Array.isArray(cfg.pricing?.volumeTiers) ? cfg.pricing.volumeTiers : []
-    return tiers.reduce((factor, tier) => pcs >= Number(tier.min) ? Number(tier.factor) : factor, 1)
+    const tiers = Array.isArray(cfg.pricing?.volumeTiers)
+      ? cfg.pricing.volumeTiers : []
+    return tiers.reduce(
+      (factor, tier) => pcs >= Number(tier.min) ? Number(tier.factor) : factor,
+      1
+    )
   }
+
   const estimate = () => {
-    const rate = state.plan === 'perpetual' ? cfg.pricing?.perpetualPerPc : cfg.pricing?.annualPerPc
+    const rate = state.plan === 'perpetual'
+      ? cfg.pricing?.perpetualPerPc
+      : cfg.pricing?.annualPerPc
     if (!Number.isFinite(Number(rate)) || Number(rate) <= 0) return null
     return Math.round(state.pcs * Number(rate) * tierFactor(state.pcs) * 100) / 100
   }
+
   const whatsappUrl = () => {
     const msg = `Hola, quiero cotizar la ${planLabel().toLowerCase()} de ${cfg.brand || 'CronoTimer'} para ${state.pcs} PCs.`
     return `https://wa.me/${cfg.whatsapp || ''}?text=${encodeURIComponent(msg)}`
@@ -259,12 +285,17 @@
       const pct = max > min ? ((state.pcs - min) / (max - min)) * 100 : 0
       pcRange.style.setProperty('--range-progress', `${Math.max(0, Math.min(100, pct))}%`)
     }
-    $$('.pc-preset').forEach(b => b.classList.toggle('is-active', Number(b.dataset.pcs) === state.pcs))
+    $$('.pc-preset').forEach(b =>
+      b.classList.toggle('is-active', Number(b.dataset.pcs) === state.pcs)
+    )
     if (quotePlan) quotePlan.textContent = planLabel()
-    if (quotePcs) quotePcs.textContent = `${state.pcs} ${state.pcs === 1 ? 'PC' : 'PCs'}`
+    if (quotePcs) quotePcs.textContent =
+      `${state.pcs} ${state.pcs === 1 ? 'PC' : 'PCs'}`
+
     const value = estimate()
     if (quoteEstimate) {
-      quoteEstimate.textContent = value == null ? 'Cotización personalizada' : `${money(value)} aprox.`
+      quoteEstimate.textContent =
+        value == null ? 'Cotización personalizada' : `${money(value)} aprox.`
       quoteEstimate.classList.toggle('is-quote', value == null)
     }
     if (quoteNote) {
@@ -278,7 +309,9 @@
       btn.classList.toggle('is-active', active)
       btn.setAttribute('aria-pressed', String(active))
     })
-    priceCards.forEach(card => card.classList.toggle('is-featured', card.dataset.plan === state.plan))
+    priceCards.forEach(card =>
+      card.classList.toggle('is-featured', card.dataset.plan === state.plan)
+    )
   }
 
   planButtons.forEach(btn => btn.addEventListener('click', () => {
@@ -300,53 +333,83 @@
     state.plan = btn.dataset.quote === 'perpetual' ? 'perpetual' : 'annual'
     if (pcRange) state.pcs = Number(pcRange.value) || state.pcs
     renderQuote()
-    $('#cotizador')?.scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth', block: 'center' })
+    $('#cotizador')?.scrollIntoView({
+      behavior: reduceMotion ? 'auto' : 'smooth',
+      block: 'center'
+    })
   }))
   if (pcRange) renderQuote()
 
-  /* ── Descargas ─────────────────────────────────────────────────────────── */
+  /* ── Descargas: servidor y cliente desde GitHub Releases ───────────────── */
   const releaseAsset = (file) => {
     const gh = cfg.github || {}
-    if (!gh.owner || !gh.repo || gh.owner === 'TU_USUARIO' || !gh.releaseTag) return ''
+    if (!gh.owner || !gh.repo || gh.owner === 'TU_USUARIO' || !gh.releaseTag || !file) return ''
     return `https://github.com/${gh.owner}/${gh.repo}/releases/download/${gh.releaseTag}/${encodeURIComponent(file)}`
   }
+
   const toast = $('#toast')
   let toastTimer = null
+
   const showToast = (msg, type = '') => {
     if (!toast) return
     toast.textContent = msg
     toast.className = `toast is-visible ${type}`.trim()
     clearTimeout(toastTimer)
-    toastTimer = setTimeout(() => { toast.className = 'toast' }, 4200)
+    toastTimer = setTimeout(() => {
+      toast.className = 'toast'
+    }, 4200)
   }
 
   $$('[data-download]').forEach(link => {
     const key = link.dataset.download
     const item = cfg.downloads?.[key]
     if (!item) return
-    link.href = item.local || '#'
-    link.setAttribute('download', '')
-    const release = releaseAsset(item.file)
-    if (release) link.dataset.release = release
+
+    const releaseUrl = releaseAsset(item.file)
+    const localPath = typeof item.local === 'string' ? item.local.trim() : ''
+
+    // Si existe una ruta local, se prueba primero.
+    // Si no existe, se utiliza directamente GitHub Releases.
+    link.href = localPath || releaseUrl || '#'
+
+    if (localPath) {
+      link.setAttribute('download', '')
+    } else {
+      link.removeAttribute('download')
+    }
 
     link.addEventListener('click', async (e) => {
-      if (location.protocol === 'file:') return // vista local: el archivo existe
-      let exists = false
-      try {
-        const res = await fetch(item.local, { method: 'HEAD', cache: 'no-store' })
-        exists = res.ok
-      } catch { /* archivo local no disponible */ }
-      if (exists) return
-      e.preventDefault()
-      const releaseUrl = link.dataset.release
-      if (releaseUrl) {
-        window.open(releaseUrl, '_blank', 'noopener')
-      } else {
-        showToast('El instalador aún no está publicado. Subilo a GitHub Releases y configurá js/config.js.', 'error')
+      // No consultar una ruta vacía: fetch('') devuelve la propia página HTML.
+      if (localPath && location.protocol !== 'file:') {
+        try {
+          const res = await fetch(localPath, {
+            method: 'HEAD',
+            cache: 'no-store'
+          })
+          if (res.ok) return
+        } catch {
+          // El archivo local no está disponible.
+        }
+      } else if (localPath && location.protocol === 'file:') {
+        return
       }
+
+      if (!releaseUrl) {
+        e.preventDefault()
+        showToast(
+          'El instalador aún no está publicado. Subilo a GitHub Releases y configurá js/config.js.',
+          'error'
+        )
+        return
+      }
+
+      // Descarga directamente el ejecutable desde GitHub.
+      e.preventDefault()
+      window.location.href = releaseUrl
     })
   })
 
+  /* ── Copiar SHA-256 ─────────────────────────────────────────────────────── */
   $$('[data-copy]').forEach(btn => btn.addEventListener('click', async () => {
     const text = btn.dataset.copy || ''
     try {
@@ -357,6 +420,7 @@
     }
   }))
 
+  /* ── Enlaces a GitHub Releases ─────────────────────────────────────────── */
   $$('[data-releases]').forEach(link => {
     const gh = cfg.github || {}
     if (gh.owner && gh.repo && gh.owner !== 'TU_USUARIO') {
@@ -373,7 +437,9 @@
   const faqs = $$('.faq-item')
   faqs.forEach(item => item.addEventListener('toggle', () => {
     if (!item.open) return
-    faqs.forEach(other => { if (other !== item) other.open = false })
+    faqs.forEach(other => {
+      if (other !== item) other.open = false
+    })
   }))
 
   /* ── Nav activo según sección ──────────────────────────────────────────── */
@@ -381,16 +447,27 @@
   const sections = navLinks
     .map(a => document.getElementById(a.getAttribute('href').slice(1)))
     .filter(Boolean)
+
   if ('IntersectionObserver' in window && sections.length) {
     const navObserver = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         if (!entry.isIntersecting) return
-        navLinks.forEach(a => a.classList.toggle('is-active', a.getAttribute('href') === `#${entry.target.id}`))
+        navLinks.forEach(a =>
+          a.classList.toggle(
+            'is-active',
+            a.getAttribute('href') === `#${entry.target.id}`
+          )
+        )
       })
     }, { rootMargin: '-45% 0px -50% 0px', threshold: 0 })
     sections.forEach(s => navObserver.observe(s))
   }
 
   /* ── Botón volver arriba ───────────────────────────────────────────────── */
-  backTop?.addEventListener('click', () => window.scrollTo({ top: 0, behavior: reduceMotion ? 'auto' : 'smooth' }))
+  backTop?.addEventListener('click', () =>
+    window.scrollTo({
+      top: 0,
+      behavior: reduceMotion ? 'auto' : 'smooth'
+    })
+  )
 })()
