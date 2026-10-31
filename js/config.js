@@ -18,7 +18,7 @@ window.SITE_CONFIG = {
   github: {
     owner: 'kennyaapro23',
     repo: 'crono-timer-landin',
-    releaseTag: 'v2.1.0'
+    releaseTag: 'V2.1.0'
   },
 
   // Instaladores disponibles en GitHub Releases
@@ -33,7 +33,7 @@ window.SITE_CONFIG = {
 
     client: {
       label: 'Cliente para cada PC',
-      file: 'NetControl Client Setup 2.1.0.exe',
+      file: 'NetControl.Client.Setup.2.1.0.exe',
       local: '',
       size: '79.6 MB',
       sha256: 'CD45E834277CFEC31BB2FC0D7361005EA132E178EA1EEF6D02BC6A5B15EBB8AB'
