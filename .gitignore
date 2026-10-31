@@ -1,0 +1,10 @@
+# Instaladores locales: no se versionan (GitHub limita archivos a 100 MB).
+# Subilos a GitHub Releases con el tag v2.1.0.
+downloads/*.exe
+downloads/*.zip
+downloads/*.blockmap
+
+# Sistema
+Thumbs.db
+desktop.ini
+.DS_Store
