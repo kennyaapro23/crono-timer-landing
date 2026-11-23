@@ -25,7 +25,7 @@ window.SITE_CONFIG = {
   downloads: {
     server: {
       label: 'Servidor / Panel de administración',
-      file: 'CronoTimer-Setup-2.1.0.exe',
+      file: 'CronoTimer-Setup-2.1.1.exe',
       local: '',
       size: '85.4 MB',
       sha256: 'D7B25614B861DCD06DFB0A29063E1298EE33BC74343C53FE5F89A0CE851D8708'
@@ -33,7 +33,7 @@ window.SITE_CONFIG = {
 
     client: {
       label: 'Cliente para cada PC',
-      file: 'NetControl.Client.Setup.2.1.0.exe',
+      file: 'CronoTimer.Client.Setup.2.1.1.exe',
       local: '',
       size: '79.6 MB',
       sha256: 'CD45E834277CFEC31BB2FC0D7361005EA132E178EA1EEF6D02BC6A5B15EBB8AB'
