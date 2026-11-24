@@ -6,8 +6,8 @@
 
 window.SITE_CONFIG = {
   brand: 'CronoTimer',
-  version: '2.1.0',
-  releaseDate: '30/10/2026',
+  version: '2.1.1',
+  releaseDate: '23/11/2026',
 
   // Contacto comercial
   whatsapp: '51924589730',
@@ -18,7 +18,7 @@ window.SITE_CONFIG = {
   github: {
     owner: 'kennyaapro23',
     repo: 'crono-timer-landing',
-    releaseTag: 'V2.1.0'
+    releaseTag: 'V2.1.1'
   },
 
   // Instaladores disponibles en GitHub Releases
